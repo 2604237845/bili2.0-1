@@ -33,10 +33,10 @@ class Users:
             if user.is_in_jail and task_name in (
                     'recv_heart_gift',
                     'open_silver_box',
-                    'join_storm_raffle',
-                    'join_guard_raffle',
-                    'join_tv_raffle',
-                    'join_pk_raffle'
+                    #'join_storm_raffle',
+                    #'join_guard_raffle',
+                    #'join_tv_raffle',
+                    #'join_pk_raffle'
             ):
                 continue
             if task_name != 'null':  # null 就忽略过滤，直接参与
