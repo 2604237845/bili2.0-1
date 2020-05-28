@@ -46,6 +46,10 @@ class WebSession:
         except:
             return {'code':-1}
 
+    @staticmethod
+    async def _recv(rsp: aiohttp.ClientResponse):
+        return rsp
+
     # 基本就是通用的 request
     async def _orig_req(self, parse_rsp, method, url, **kwargs):
         i = 0
@@ -134,3 +138,10 @@ class WebSession:
                            url,
                            **kwargs) -> str:
         return await self._req(self._recv_str, method, url, **kwargs)
+
+    # 返回 response
+    async def request(self,
+                      method,
+                      url,
+                      **kwargs) -> aiohttp.ClientResponse:
+        return await self._req(self._recv, method, url, **kwargs)
