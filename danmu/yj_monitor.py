@@ -23,19 +23,40 @@ class TcpYjMonitorClient(yj_monitor.TcpDanmuClient):
             bili_statistics.add2pushed_raffles('Yj协同节奏风暴', 2)
         elif raffle_type == 'GUARD':
             print(f'{self._area_id} 号数据连接检测到{raffle_roomid:^9}的大航海(id: {raffle_id})')
-            raffle_handler.push2queue(GuardRafflJoinTask, raffle_roomid)
+            if 'other_raffle_data' in data:
+                json_rsp = {
+                    'data': {
+                        'guard': [data['other_raffle_data']]
+                    }
+                }
+                # dict 不可以用于 raffle_handler.py 的 set 机制
+                raffle_handler.exec_at_once(GuardRafflJoinTask, raffle_roomid, json_rsp)
+            else:
+                raffle_handler.push2queue(GuardRafflJoinTask, raffle_roomid)
             bili_statistics.add2pushed_raffles('Yj协同大航海', 2)
         elif raffle_type == 'PK':
             print(f'{self._area_id} 号数据连接检测到{raffle_roomid:^9}的大乱斗(id: {raffle_id})')
-            json_rsp = {
-                'data': {
-                    'pk': [data['other_raffle_data']]
+            if 'other_raffle_data' in data:
+                json_rsp = {
+                    'data': {
+                        'pk': [data['other_raffle_data']]
+                    }
                 }
-            }
-            raffle_handler.exec_at_once(PkRaffleJoinTask, raffle_roomid, json_rsp)
+                raffle_handler.exec_at_once(PkRaffleJoinTask, raffle_roomid, json_rsp)
+            else:
+                raffle_handler.push2queue(PkRaffleJoinTask, raffle_roomid)
             bili_statistics.add2pushed_raffles('Yj协同大乱斗', 2)
         elif raffle_type == 'TV':
             print(f'{self._area_id}号数据连接检测到{raffle_roomid:^9}的小电视(id: {raffle_id})')
-            raffle_handler.push2queue(TvRaffleJoinTask, raffle_roomid)
+            if 'other_raffle_data' in data:
+                json_rsp = {
+                    'data': {
+                        'gift': [data['other_raffle_data']]
+                    }
+                }
+                # dict 不可以用于 raffle_handler.py 的 set 机制
+                raffle_handler.exec_at_once(TvRaffleJoinTask, raffle_roomid, json_rsp)
+            else:
+                raffle_handler.push2queue(TvRaffleJoinTask, raffle_roomid)
             bili_statistics.add2pushed_raffles('Yj协同小电视', 2)
         return True
