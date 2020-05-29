@@ -44,7 +44,6 @@ loop = asyncio.get_event_loop()
 
 dict_user = conf_loader.read_user()
 dict_bili = conf_loader.read_bili()
-dict_bilitv = conf_loader.read_bilitv()
 dict_color = conf_loader.read_color()
 dict_ctrl = conf_loader.read_ctrl()
 dict_task = conf_loader.read_task()
@@ -59,11 +58,9 @@ async def init_users():
     custom_task_control = dict_task['custom_task_control']
     global_task_arrangement = dict_task['global_task_arrangement']
     custom_task_arrangement = dict_task['custom_task_arrangement']
-
     users = notifier.Users(global_task_control=global_task_control,
                            global_task_arrangement=global_task_arrangement,
                            dict_bili=dict_bili,
-                           dict_bilitv = dict_bilitv,
                            force_sleep=bili_sched.force_sleep)
     notifier.init(users=users)
     assert dict_user['users']  # 这个 list 为 true 表示至少要有一个用户信息
