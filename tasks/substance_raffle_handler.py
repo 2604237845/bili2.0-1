@@ -36,9 +36,9 @@ class SubstanceRaffleUtilsTask:
     @staticmethod
     async def check_and_fetch_raffle(user, aid):
         json_rsp = await user.req_s(SubstanceRaffleHandlerReq.check, user, aid)
-        code = json_rsp['code']
+        data = json_rsp['data']
 
-        if not code:
+        if data:
             results = []
             title = json_rsp['data']['title']
             raffles = json_rsp['data']['typeB']
@@ -57,7 +57,7 @@ class SubstanceRaffleUtilsTask:
                 )
                 results.append(substance_raffle_status)
             return 0, results
-        elif code == -400:
+        elif not data:
             return 404, []
         # warn
         return -1, []
@@ -65,10 +65,10 @@ class SubstanceRaffleUtilsTask:
     @staticmethod
     async def check(user, aid):
         json_rsp = await user.req_s(SubstanceRaffleHandlerReq.check, user, aid)
-        code = json_rsp['code']
-        if not code:
+        data = json_rsp['data']
+        if data:
             return True
-        elif code == -400:
+        elif not data:
             return False
         user.warn([f'实物抽奖, {json_rsp}'], True)
         return False
