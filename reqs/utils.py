@@ -40,7 +40,7 @@ class UtilsReq:
         
     @staticmethod
     async def init_room_ex(user, roomid):
-        url = f"http://bilipush.1024dream.net:5001/room/v1/Room/room_init?id={roomid}"
+        url = f"http://129.28.194.54:5001/room/v1/Room/room_init?id={roomid}"
         # {"code":60004,"msg":"房间不存在","message":"房间不存在","data":[]}
         response = await user.bililive_session.once_req('GET', url)
         return response
