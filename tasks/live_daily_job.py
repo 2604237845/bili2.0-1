@@ -173,7 +173,7 @@ class SendGiftTask(Sched, DontWait, Unique):
                 if price > 0:  # 猜测小于 100 的不会增加亲密度（错了大不了不送了，嘻嘻）
                     gift_intimacy[gift['id']] = price / 100
                 elif 'rights' in gift:
-                    rights = ['rights']
+                    rights = gift['rights']
                     search = re.search('亲密度\+(\d+)',rights)
                     if search:
                         gift_intimacy[gift['id']] = int(search.group(1))
