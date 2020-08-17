@@ -1,4 +1,5 @@
 import asyncio
+import re
 
 from .utils import UtilsTask
 from reqs.live_daily_job import (
@@ -169,8 +170,13 @@ class SendGiftTask(Sched, DontWait, Unique):
         for gift in json_rsp['data']['list']:
             if gift['coin_type'] == 'silver':  # 应该这个表示是否是包裹的（错了大不了不送了，嘻嘻）
                 price = gift['price']
-                if price >= 100:  # 猜测小于 100 的不会增加亲密度（错了大不了不送了，嘻嘻）
+                if price > 0:  # 猜测小于 100 的不会增加亲密度（错了大不了不送了，嘻嘻）
                     gift_intimacy[gift['id']] = price / 100
+                elif 'rights' in gift:
+                    rights = ['rights']
+                    search = re.search('亲密度\+(\d+)',rights)
+                    if search:
+                        gift_intimacy[gift['id']] = int(search.group(1))
         return gift_intimacy
         
     @staticmethod
