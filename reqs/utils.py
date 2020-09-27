@@ -81,7 +81,8 @@ class UtilsReq:
             'storm_beat_id': '0',
             'metadata': '',
             'price': '0',
-            'csrf_token': user.dict_user['csrf']
+            'csrf_token': user.dict_user['csrf'],
+            'csrf': user.dict_user['csrf'],
         }
         json_rsp = await user.bililive_session.request_json('POST', url, headers=user.pc.headers, data=data)
         return json_rsp
@@ -103,7 +104,8 @@ class UtilsReq:
             'storm_beat_id': '0',
             'metadata': '',
             'price': '0',
-            'csrf_token': user.dict_user['csrf']
+            'csrf_token': user.dict_user['csrf'],
+            'csrf': user.dict_user['csrf'],
         }
         json_rsp = await user.bililive_session.request_json('POST', url, headers=user.pc.headers, data=data)
         return json_rsp
@@ -206,7 +208,8 @@ class UtilsReq:
             'act': 1,
             're_src': 11,
             'jsonp': 'jsonp',
-            'csrf': user.dict_user['csrf']
+            'csrf': user.dict_user['csrf'],
+            'csrf_token': user.dict_user['csrf'],
         }
         json_rsp = await user.other_session.request_json('POST', url, data=payload, headers=user.pc.headers)
         return json_rsp
@@ -219,7 +222,8 @@ class UtilsReq:
             'act': 2,
             're_src': 11,
             'jsonp': 'jsonp',
-            'csrf': user.dict_user['csrf']
+            'csrf': user.dict_user['csrf'],
+            'csrf_token': user.dict_user['csrf'],
         }
         json_rsp = await user.other_session.request_json('POST', url, data=data, headers=user.pc.headers)
         return json_rsp
@@ -242,6 +246,7 @@ class UtilsReq:
         payload = {
             'tag': name,
             'csrf': user.dict_user['csrf'],
+            'csrf_token': user.dict_user['csrf'],
             'jsonp': 'jsonp'
         }
         json_rsp = await user.other_session.request_json('POST', url, data=payload, headers=user.pc.headers)
@@ -257,7 +262,8 @@ class UtilsReq:
         payload = {
             'fids': uid,
             'tagids': group_id,
-            'csrf': user.dict_user['csrf']
+            'csrf': user.dict_user['csrf'],
+            'csrf_token': user.dict_user['csrf'],
         }
         json_rsp = await user.other_session.request_json('POST', url, data=payload, headers=headers)
         return json_rsp

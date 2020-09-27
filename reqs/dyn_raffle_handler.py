@@ -18,6 +18,7 @@ class DynRaffleHandlerReq:
             'at_uids': '',
             'at_control': [],
             'csrf_token': user.dict_user['csrf'],
+            'csrf': user.dict_user['csrf'],
         }
 
         json_rsp = await user.other_session.request_json('POST', url, data=data, headers=user.pc.headers)
@@ -33,6 +34,7 @@ class DynRaffleHandlerReq:
             'at_uids': at_uids,
             'ctrl': ctrl,
             'csrf_token': user.dict_user['csrf'],
+            'csrf': user.dict_user['csrf'],
         }
         json_rsp = await user.other_session.request_json('POST', url, headers=user.pc.headers, data=data)
         return json_rsp
@@ -49,7 +51,7 @@ class DynRaffleHandlerReq:
         data = {
             'doc_id': doc_id,
             'csrf_token': user.dict_user['csrf'],
-            'csrf': ''
+            'csrf': user.dict_user['csrf'],
         }
         json_rsp = await user.other_session.request_json('POST', url, data=data, headers=user.pc.headers)
         return json_rsp
@@ -61,6 +63,7 @@ class DynRaffleHandlerReq:
             'uid': user.dict_user['uid'],
             'dynamic_id': dyn_id,
             'csrf_token': user.dict_user['csrf'],
+            'csrf': user.dict_user['csrf'],
         }
 
         json_rsp = await user.other_session.request_json('POST', url, headers=user.pc.headers, data=payload)

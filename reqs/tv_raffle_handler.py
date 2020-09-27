@@ -30,7 +30,8 @@ class TvRaffleHandlerReq:
             'id': raffle_id,
             'roomid': real_roomid,
             'type': raffle_type,
-            'csrf_token': user.dict_user['csrf']
+            'csrf_token': user.dict_user['csrf'],
+            'csrf': user.dict_user['csrf'],
         }
         json_rsp = await user.bililive_session.request_json('POST', url, data=data, headers=user.pc.headers)
         return json_rsp

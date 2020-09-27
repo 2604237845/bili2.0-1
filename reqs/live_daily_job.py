@@ -132,7 +132,8 @@ class SendGiftReq:
         url = f'{API_LIVE}/live_user/v1/UserInfo/get_weared_medal'
         data = {
             'uid': user.dict_user['uid'],
-            'csrf_token': user.dict_user['csrf']
+            'csrf_token': user.dict_user['csrf'],
+            'csrf': user.dict_user['csrf']
         }
         json_rsp = await user.bililive_session.request_json('POST', url, headers=user.pc.headers, data=data, ctrl=ZERO_ONLY_CTRL)
         return json_rsp
@@ -144,7 +145,8 @@ class ExchangeSilverCoinReq:
         url = f'{API_LIVE}/pay/v1/Exchange/silver2coin'
         data = {
             "platform": 'pc',
-            "csrf_token": user.dict_user['csrf']
+            "csrf_token": user.dict_user['csrf'],
+            "csrf": user.dict_user['csrf'],
         }
         json_rsp = await user.bililive_session.request_json('POST', url, headers=user.pc.headers, data=data)
         return json_rsp
