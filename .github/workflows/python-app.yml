@@ -28,6 +28,7 @@ jobs:
     - name: Config
       run: |
         echo "${{ secrets.USER }}" > conf/user.toml
+        cat conf/user.toml
         echo "${{ secrets.TASK }}" > conf/task.toml
         echo "${{ secrets.CTRL }}" > conf/ctrl.toml
     - name: Run
