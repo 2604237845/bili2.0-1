@@ -70,7 +70,7 @@ class SubstanceRaffleUtilsTask:
         data = json_rsp['data']
         if data:
             return True
-        elif not data:
+        else:
             return False
         user.warn([f'实物抽奖, {json_rsp}'], True)
         return False

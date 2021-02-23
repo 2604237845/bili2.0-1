@@ -85,15 +85,14 @@ class LoginTask(Forced, Wait, Multi):
             data = json_rsp['data']
             access_key = data['token_info']['access_token']
             refresh_token = data['token_info']['refresh_token']
-            cookies = data['cookie_info']['cookies']
-            list_cookies = [f'{i["name"]}={i["value"]}' for i in cookies]
-            cookie = ';'.join(list_cookies)
+            dict_cookies = {i["name"]: i["value"] for i in data['cookie_info']['cookies']}
+            cookie = ';'.join(f'{key}={value}' for key, value in dict_cookies.items())
             login_data = {
-                'csrf': cookies[0]['value'],
+                'csrf': dict_cookies['bili_jct'],
                 'access_key': access_key,
                 'refresh_token': refresh_token,
                 'cookie': cookie,
-                'uid': cookies[1]['value']
+                'uid': data['token_info']['mid']
                 }
             
             user.update_login_data(login_data)
