@@ -20,18 +20,20 @@ class SubstanceRaffleUtilsTask:
             SubstanceRaffleHandlerReq.notice, user, substance_raffle_status.aid, substance_raffle_status.number)
         assert not json_rsp['code']
         print(substance_raffle_status, json_rsp)
-        list_winners = json_rsp['data']['winnerList']
-        assert list_winners
-        substance_raffle_results = SubstanceRaffleResults(
-            aid=substance_raffle_status.aid,
-            number=substance_raffle_status.number,
-            describe=substance_raffle_status.describe,
-            join_start_time=substance_raffle_status.join_start_time,
-            join_end_time=substance_raffle_status.join_end_time,
-            prize_cmt=substance_raffle_status.prize_cmt,
-            prize_list=[int(winner['uid']) for winner in list_winners]
-        )
-        return substance_raffle_results
+        list_winners = json_rsp['data']['groups']
+        #assert list_winners
+        if list_winners is not None:
+            substance_raffle_results = SubstanceRaffleResults(
+                aid=substance_raffle_status.aid,
+                number=substance_raffle_status.number,
+                describe=substance_raffle_status.describe,
+                join_start_time=substance_raffle_status.join_start_time,
+                join_end_time=substance_raffle_status.join_end_time,
+                prize_cmt=substance_raffle_status.prize_cmt,
+                prize_list=[int(winner['uid']) for winner in list_winners]
+            )
+            return substance_raffle_results
+        return None
 
     @staticmethod
     async def check_and_fetch_raffle(user, aid):
@@ -68,7 +70,7 @@ class SubstanceRaffleUtilsTask:
         data = json_rsp['data']
         if data:
             return True
-        elif not data:
+        else:
             return False
         user.warn([f'实物抽奖, {json_rsp}'], True)
         return False
